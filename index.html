@@ -5,14 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Special One - WikiLove</title>
     <style>
+        /* --- LANDING PAGE STYLING --- */
+        #landing-page {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffffff; 
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .heart-btn {
+            font-size: 100px;
+            cursor: pointer;
+            background: none; border: none;
+            animation: pulse 2s infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .heart-btn:hover { transform: scale(1.1); }
+
+        .landing-text {
+            margin-top: 20px;
+            font-family: 'Georgia', serif;
+            color: #54595d;
+            font-style: italic;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        /* --- WIKIPEDIA CONTENT (HIDDEN BY DEFAULT) --- */
+        #main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
         /* Base Styling */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #ffffff; color: #202122; line-height: 1.6;
-            animation: fadeIn 1s ease-in; overflow-x: hidden;
+            overflow-x: hidden;
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* Header Wikipedia */
         header {
@@ -41,7 +81,7 @@
         .link { color: #3366cc; text-decoration: none; cursor: pointer; }
         .link:hover { text-decoration: underline; }
 
-        /* Infobox Purple Theme */
+        /* Infobox Theme */
         .infobox { width: 100%; border: 1px solid #a2a9b1; background-color: #f8f9fa; margin-bottom: 20px; font-size: 0.85rem; }
         .infobox-header { background-color: #d7d1f1; text-align: center; font-weight: bold; font-size: 1.1rem; padding: 8px; }
         .infobox-subheader { text-align: center; font-style: italic; color: #3366cc; padding: 4px; background: #f8f9fa; border-bottom: 1px solid #a2a9b1; }
@@ -59,76 +99,109 @@
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .btn-reveal { background: #3366cc; color: white; border: none; padding: 4px 12px; border-radius: 2px; cursor: pointer; font-size: 0.8rem; }
 
+        /* Click Heart Effect */
+        .click-heart {
+            position: fixed; color: #ff6b6b; font-size: 20px; pointer-events: none;
+            z-index: 10000; animation: clickRise 1.5s ease-out forwards;
+        }
+        @keyframes clickRise {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
+        }
+
         @media (min-width: 720px) { .infobox { float: right; width: 320px; margin-left: 20px; } }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="wiki-logo"><span>☰</span> <strong>WIKILOVE</strong></div>
-    <div class="search-icon" onclick="alert('Pencarian selesai. Kebahagiaan ditemukan pada sosok ini.')">🔍</div>
-</header>
+<audio id="myAudio" src="audio/musikk.mp3" loop></audio>
 
-<div class="container">
-    <h1 id="main-title">Special One</h1>
+<div id="landing-page">
+    <button class="heart-btn" onclick="startEverything()">❤️</button>
+    <p class="landing-text">Tap the heart to enter</p>
+</div>
 
-    <div class="lang-switcher">
-        <span>Languages: </span>
-        <span class="lang-btn active" onclick="setLang('en')" id="btn-en">English</span>
-        <span class="lang-btn" onclick="setLang('id')" id="btn-id">Bahasa Indonesia</span>
-    </div>
+<div id="main-content">
+    <header>
+        <div class="wiki-logo"><span>☰</span> <strong>WIKILOVE</strong></div>
+        <div class="search-icon" onclick="alert('Pencarian selesai. Kebahagiaan ditemukan pada sosok ini.')">🔍</div>
+    </header>
 
-    <div class="page-actions">
-        <span id="tab-art">Article</span>
-        <span class="link">Talk</span>
-    </div>
+    <div class="container">
+        <h1 id="main-title">Special One</h1>
 
-    <div class="italic-box" id="disambig-box">
-        This article is about the most beautiful person in my life. For other uses, see <a class="link">Perfect Human (disambiguation)</a>.
-    </div>
-
-    <section class="article-text" id="intro-text">
-        <p>
-            <strong>Keyla Safa Nur Zahira Hermawan</strong> (born c. 2010) is the most precious person in my life. She is widely considered to be one of the history's greatest and most successful heart thieves. 
-            She is known for her beautiful smile, caring heart, and the way she makes every ordinary day feel special. Since the day she came into my life, everything became brighter and more meaningful.
-        </p>
-    </section>
-
-    <aside class="infobox">
-        <div class="infobox-header">Keyla Safa Nur Zahira Hermawan</div>
-        <div class="infobox-subheader" id="info-sub">The Favorite Person</div>
-        <div class="infobox-image">
-            <img src="img/princess2.jpg" alt="Profile Picture">
+        <div class="lang-switcher">
+            <span>Languages: </span>
+            <span class="lang-btn active" onclick="setLang('en')" id="btn-en">English</span>
+            <span class="lang-btn" onclick="setLang('id')" id="btn-id">Bahasa Indonesia</span>
         </div>
-        <table>
-            <tr><th id="th-born">Born</th><td>2010<br><a class="link">Yogyakarta</a>, Indonesia</td></tr>
-            <tr><th id="th-occ">Occupation</th><td id="td-occ">Professional Mood Booster, Owner of my heart</td></tr>
-            <tr><th id="th-known">Known for</th><td id="td-known">Making me happy, Being cute 24/7</td></tr>
-            <tr><th id="th-status">Status</th><td id="td-status">Most loved person</td></tr>
-            <tr><th id="th-rel">Religion</th><td id="td-rel">Faith in us</td></tr>
-        </table>
-    </aside>
 
-    <section class="article-text" id="body-text">
-        <p>
-            Her reign over my heart began in 2025 and continues to expand globally. Experts suggest that a single smile from her can increase local happiness levels by 100%.
-        </p>
-    </section>
-
-    <div class="secret-box">
-        <div class="secret-header">
-            <span id="secret-title">[Show] Secret Edit Note</span>
-            <button class="btn-reveal" onclick="toggleSecret()" id="btn-show">Open</button>
+        <div class="page-actions">
+            <span id="tab-art">Article</span>
+            <span class="link">Talk</span>
         </div>
-        <div id="secretMsg" class="secret-content">
-            <p><i>"Di antara riuhnya kehidupan, aku menemukan keindahan dalam dirimu. Terima kasih, semesta, atas hadiah yang lebih indah dari rupa rupa warna dunia."</i></p>
-            <br>
-            <p><i>"Di tengah degup yang paling riuh, izinkan aku mengagumimu lebih lama. Pada dirimu, kutemukan bentuk yang paling sempurna. Pada tuturmu, kutemukan pemilik kata kata yang paling purnama."</i></p>
+
+        <div class="italic-box" id="disambig-box">
+            This article is about the most beautiful person in my life. For other uses, see <a class="link">Perfect Human (disambiguation)</a>.
+        </div>
+
+        <section class="article-text" id="intro-text">
+            <p>
+                <strong>Keyla Safa Nur Zahira Hermawan</strong> (born c. 2010) is the most precious person in my life. She is widely considered to be one of the history's greatest and most successful heart thieves. 
+                She is known for her beautiful smile, caring heart, and the way she makes every ordinary day feel special. Since the day she came into my life, everything became brighter and more meaningful.
+            </p>
+        </section>
+
+        <aside class="infobox">
+            <div class="infobox-header">Keyla Safa Nur Zahira Hermawan</div>
+            <div class="infobox-subheader" id="info-sub">The Favorite Person</div>
+            <div class="infobox-image">
+                <img src="img/princess2.jpg" alt="Profile Picture">
+            </div>
+            <table>
+                <tr><th id="th-born">Born</th><td>2010<br><a class="link">Yogyakarta</a>, Indonesia</td></tr>
+                <tr><th id="th-occ">Occupation</th><td id="td-occ">Professional Mood Booster, Owner of my heart</td></tr>
+                <tr><th id="th-known">Known for</th><td id="td-known">Making me happy, Being cute 24/7</td></tr>
+                <tr><th id="th-status">Status</th><td id="td-status">Most loved person</td></tr>
+                <tr><th id="th-rel">Religion</th><td id="td-rel">Faith in us</td></tr>
+            </table>
+        </aside>
+
+        <section class="article-text" id="body-text">
+            <p>
+                Her reign over my heart began in 2025 and continues to expand globally. Experts suggest that a single smile from her can increase local happiness levels by 100%.
+            </p>
+        </section>
+
+        <div class="secret-box">
+            <div class="secret-header">
+                <span id="secret-title">[Show] Secret Edit Note</span>
+                <button class="btn-reveal" onclick="toggleSecret()" id="btn-show">Open</button>
+            </div>
+            <div id="secretMsg" class="secret-content">
+                <p><i>"Di antara riuhnya kehidupan, aku menemukan keindahan dalam dirimu. Terima kasih, semesta, atas hadiah yang lebih indah dari rupa rupa warna dunia."</i></p>
+                <br>
+                <p><i>"Di tengah degup yang paling riuh, izinkan aku mengagumimu lebih lama. Pada dirimu, kutemukan bentuk yang paling sempurna. Pada tuturmu, kutemukan pemilik kata kata yang paling purnama."</i></p>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
+    const audio = document.getElementById("myAudio");
+
+    function startEverything() {
+        audio.play().catch(e => console.log("Audio play blocked by browser."));
+        const landing = document.getElementById("landing-page");
+        landing.style.opacity = "0";
+        setTimeout(() => {
+            landing.style.visibility = "hidden";
+            const main = document.getElementById("main-content");
+            main.style.display = "block";
+            setTimeout(() => { main.style.opacity = "1"; }, 50);
+        }, 800);
+    }
+
     const content = {
         en: {
             title: "Special One", tabArt: "Article",
@@ -187,91 +260,19 @@
             btn.innerText = content[currentLang].btnC;
         }
     }
+
+    // Effect: Click anywhere to show heart
+    document.addEventListener('click', (e) => {
+        if(e.target.tagName !== 'BUTTON') {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.classList.add('click-heart');
+            heart.style.left = (e.clientX - 10) + 'px';
+            heart.style.top = (e.clientY - 10) + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1500);
+        }
+    });
 </script>
 </body>
 </html>
-        </table>
-    </aside>
-
-    <section class="article-text" id="body-text">
-        <p>
-            Her reign over my heart began in 2025 and continues to expand globally. Experts suggest that a single smile from her can increase local happiness levels by 100%.
-        </p>
-    </section>
-
-    <div class="secret-box">
-        <div class="secret-header">
-            <span id="secret-title">[Show] Secret Edit Note</span>
-            <button class="btn-reveal" onclick="toggleSecret()" id="btn-show">Open</button>
-        </div>
-        <div id="secretMsg" class="secret-content">
-            <p><i>"Di antara riuhnya kehidupan, aku menemukan keindahan dalam dirimu. Terima kasih, semesta, atas hadiah yang lebih indah dari rupa rupa warna dunia."</i></p>
-            <br>
-            <p><i>"Di tengah degup yang paling riuh, izinkan aku mengagumimu lebih lama. Pada dirimu, kutemukan bentuk yang paling sempurna. Pada tuturmu, kutemukan pemilik kata kata yang paling purnama."</i></p>
-        </div>
-    </div>
-</div>
-
-<script>
-    const content = {
-        en: {
-            title: "Special One", tabArt: "Article",
-            disambig: 'This article is about the most beautiful person in my life. For other uses, see <a class="link">Perfect Human (disambiguation)</a>.',
-            intro: '<strong>Keyla Safa Nur Zahira Hermawan</strong> (born c. 2010) is the most precious person in my life. She is widely considered to be one of the history\'s greatest and most successful heart thieves. She is known for her beautiful smile, caring heart, and the way she makes every ordinary day feel special. Since the day she came into my life, everything became brighter and more meaningful.',
-            sub: "The Favorite Person", born: "Born", occ: "Occupation", occVal: "Professional Mood Booster, Owner of my heart", known: "Known for", knownVal: "Making me happy, Being cute 24/7", status: "Status", statusVal: "Most loved person", rel: "Religion", relVal: "Faith in us",
-            body: "Her reign over my heart began in 2025 and continues to expand globally. Experts suggest that a single smile from her can increase local happiness levels by 100%.",
-            secretT: "[Show] Secret Edit Note", btnS: "Open", btnC: "Close"
-        },
-        id: {
-            title: "Manusia Istimewa", tabArt: "Halaman",
-            disambig: 'Artikel ini berisi tentang orang paling berharga dalam hidup saya. Untuk kegunaan lain, lihat <a class="link">Manusia Sempurna (disambiguasi)</a>.',
-            intro: '<strong>Keyla Safa Nur Zahira Hermawan</strong> (lahir 2010) adalah sosok paling berharga dan dicintai dalam hidup saya. Ia secara luas dianggap sebagai salah satu pencuri hati tersukses dalam sejarah pribadi saya. Ia dikenal karena senyumnya yang indah, hati yang penuh kasih, dan caranya membuat hari-hari biasa terasa sangat istimewa. Sejak kehadirannya, segala sesuatu menjadi lebih cerah dan penuh makna.',
-            sub: "Orang Favorit", born: "Lahir", occ: "Pekerjaan", occVal: "Mood Booster profesional, Pemilik hati saya", known: "Dikenal karena", knownVal: "Membuat saya bahagia, Menggemaskan 24/7", status: "Status", statusVal: "Orang paling tersayang", rel: "Keyakinan", relVal: "Masa depan bersama",
-            body: "Kekuasaannya atas hati saya dimulai pada tahun 2025 dan terus berkembang pesat hingga saat ini. Para ahli menyatakan bahwa satu senyuman darinya mampu meningkatkan kadar kebahagiaan hingga 100% dalam sekejap.",
-            secretT: "[Tampilkan] Catatan Suntingan Rahasia", btnS: "Buka", btnC: "Tutup"
-        }
-    };
-
-    function setLang(lang) {
-        document.getElementById('main-title').innerText = content[lang].title;
-        document.getElementById('tab-art').innerText = content[lang].tabArt;
-        document.getElementById('disambig-box').innerHTML = content[lang].disambig;
-        document.getElementById('intro-text').innerHTML = `<p>${content[lang].intro}</p>`;
-        document.getElementById('info-sub').innerText = content[lang].sub;
-        document.getElementById('th-born').innerText = content[lang].born;
-        document.getElementById('th-occ').innerText = content[lang].occ;
-        document.getElementById('td-occ').innerText = content[lang].occVal;
-        document.getElementById('th-known').innerText = content[lang].known;
-        document.getElementById('td-known').innerText = content[lang].knownVal;
-        document.getElementById('th-status').innerText = content[lang].status;
-        document.getElementById('td-status').innerText = content[lang].statusVal;
-        document.getElementById('th-rel').innerText = content[lang].rel;
-        document.getElementById('td-rel').innerText = content[lang].relVal;
-        document.getElementById('body-text').innerHTML = `<p>${content[lang].body}</p>`;
-        document.getElementById('secret-title').innerText = content[lang].secretT;
-        
-        const btn = document.getElementById('btn-show');
-        const msgDisplay = document.getElementById('secretMsg').style.display;
-        btn.innerText = (msgDisplay === 'block') ? content[lang].btnC : content[lang].btnS;
-
-        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-        document.getElementById('btn-id').classList.toggle('active', lang === 'id');
-    }
-
-    function toggleSecret() {
-        const msg = document.getElementById('secretMsg');
-        const btn = document.getElementById('btn-show');
-        const currentLang = document.getElementById('btn-en').classList.contains('active') ? 'en' : 'id';
-        
-        if (msg.style.display === 'block') {
-            msg.style.display = 'none';
-            btn.innerText = content[currentLang].btnS;
-        } else {
-            msg.style.display = 'block';
-            btn.innerText = content[currentLang].btnC;
-        }
-    }
-</script>
-</body>
-</html>
-
